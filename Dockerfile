@@ -5,6 +5,7 @@ MAINTAINER mitch.hulscher@nepworldwide.nl
 # Install required Software
 
 RUN yum -y install curl bzip2 unzip sudo \
+ && sed -i 's/requiretty$//' /etc/sudoers \
 
 # Install repositories
 

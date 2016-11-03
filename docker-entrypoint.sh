@@ -95,16 +95,16 @@ function start_services {
 
 # Start services
 
-if [ "x${START_SERVICES}" != "x" ]; then
+if [ ! -z ${START_SERVICES+x} ]; then
   start_services
 fi
 
 # Execute command
 
-if [ "x${@}" = "x" ]; then
+if [ -z ${@+x} ]; then
   echo " ---> Sleeping"
   sleep infinity
 else
   echo " ---> Running your command"
-  bash -c "$@"
+  "$@"
 fi
