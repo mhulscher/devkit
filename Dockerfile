@@ -5,7 +5,7 @@ MAINTAINER mitch.hulscher@nepworldwide.nl
 # Install required Software
 
 RUN yum -y install curl bzip2 unzip sudo \
- && sed -i 's/requiretty$//' /etc/sudoers \
+ && sed -i 's/ requiretty/ !requiretty/g' /etc/sudoers \
 
 # Install repositories
 
@@ -68,12 +68,12 @@ type=rpm-md\n\
 
 ## confd
 
- && curl -Lo /usr/bin/confd https://github.com/kelseyhightower/confd/releases/download/v0.12.0-alpha3/confd-0.12.0-alpha3-linux-amd64 \
+ && curl --silent -Lo /usr/bin/confd https://github.com/kelseyhightower/confd/releases/download/v0.12.0-alpha3/confd-0.12.0-alpha3-linux-amd64 \
  && chmod +x /usr/bin/confd \
 
 ## sonar-scanner
 
-  && curl -Lo /sonar-scanner.zip https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.8.zip \
+  && curl --silent -Lo /sonar-scanner.zip https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.8.zip \
   && unzip /sonar-scanner.zip \
   && rm -f /sonar-scanner.zip /sonar-scanner-2.8/conf/sonar-scanner.properties \
   && ln -vs /sonar-scanner-2.8/bin/sonar-scanner /usr/bin/sonar-scanner \
