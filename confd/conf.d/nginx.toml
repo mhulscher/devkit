@@ -1,0 +1,8 @@
+[template]
+src   = "www.conf.tmpl"
+dest  = "/etc/nginx/conf.d/www.conf"
+owner = "nginx"
+mode  = "0444"
+keys  = [
+  "/ngx",
+]
