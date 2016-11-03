@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -eufo pipefail
 
@@ -10,12 +10,25 @@ function start_xvfb {
 }
 
 function start_elasticsearch {
-  su - elasticsearch - "/usr/share/elasticsearch/bin/elasticsearch" &
-  sleep 1
+  export ES_HOME=/usr/share/elasticsearch
+  export CONF_DIR=/etc/elasticsearch
+  export DATA_DIR=/var/lib/elasticsearch
+  export LOG_DIR=/var/log/elasticsearch
+  export PID_DIR=/var/run/elasticsearch
+
+  cd ${ES_HOME}
+  sudo -u elasticsearch /usr/share/elasticsearch/bin/elasticsearch \
+    -p ${PID_DIR}/elasticsearch.pid \
+    -Edefault.path.logs=${LOG_DIR} \
+    -Edefault.path.data=${DATA_DIR} \
+    -Edefault.path.conf=${CONF_DIR} &
+
+  cd -
+  sleep 10
 }
 
 function start_mongodb {
-  su - mongod -c "/usr/bin/mongod -f /etc/mongod.conf" &
+  sudo -u mongod /usr/bin/mongod -f /etc/mongod.conf &
   sleep 1
 }
 
@@ -27,7 +40,7 @@ function start_mariadb {
 }
 
 function start_redis {
-  su  - redis -c "/usr/bin/redis-server /etc/redis.conf --daemonize no" &
+  sudo -u redis /usr/bin/redis-server &
   sleep 1
 }
 
@@ -43,42 +56,55 @@ function start_nginx {
   export NGX_PHP_LOCATION="${NGX_PHP_LOCATION:-^/${NGX_PHP_FRONT_CONTROLLER}(/|$)}"
 
   confd -onetime -backend env --log-level info
-  /usr/bin/nginx -g "daemon off;" -c /etc/nginx/nginx.conf &
+  /usr/sbin/nginx -g "daemon off;" -c /etc/nginx/nginx.conf &
 
   sleep 1
 }
 
 function start_services {
-  for service in "${START_SERVICES}"; do
+  for service in ${START_SERVICES}; do
     echo " ---> Starting service '${service}'"
     case ${service} in
       nginx)
-        start_nginx;;
+        start_nginx
+        ;;
       php-fpm)
-        start_php_fpm;;
+        start_php_fpm
+        ;;
       redis)
-        start_redis;;
+        start_redis
+        ;;
       mariadb)
-        start_mariadb;;
+        start_mariadb
+        ;;
       mongodb)
-        start_mongodb;;
+        start_mongodb
+        ;;
       elasticsearch)
-        start_elasticsearch;;
-      xfvb)
-        start_xvfb;;
+        start_elasticsearch
+        ;;
+      xvfb)
+        start_xvfb
+        ;;
       *)
         echo >&2 " ---> Skipping unknown service '${service}'"
+        ;;
     esac
   done
 }
 
 # Start services
 
-if [ -z ${START_SERVICES} ]; then
+if [ "x${START_SERVICES}" != "x" ]; then
   start_services
 fi
 
 # Execute command
 
-echo " ---> Running your command"
-bash -c "$@"
+if [ "x${@}" = "x" ]; then
+  echo " ---> Sleeping"
+  sleep infinity
+else
+  echo " ---> Running your command"
+  bash -c "$@"
+fi

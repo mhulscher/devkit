@@ -9,7 +9,7 @@ The following components are installed:
 
 Software | Version | Extra
 ---|---|---
-php | 7 | composer, modules: imap, intl, json, ldap, mbstring, mcrypt, mysqlnd, opcache, pecl-redis, pdo, process, recode, tidy, twig, xml
+php | 7 | composer, modules: bcmath, gd, imap, intl, json, ldap, mbstring, mcrypt, mysqlnd, odbc, amqp, apcu, redis, pdo, process, recode, soap, tidy, twig, xml, xmlrpc
 java | openjdk 8 | ant, maven
 nodejs | 6 | npm, grunt, gulp, bower, yarn, apidoc, jspm, phantomjs
 ruby  | 2.0 | compass, sass
@@ -45,3 +45,4 @@ The following software is available as well.
 | wget
 | git
 | rsync
+| sonar-scanner

@@ -17,7 +17,7 @@ ci-deploy: deis-deploy
 create-artifact:
 
 docker-image:
-	docker build --force-rm -t $(REPOSITORY):$(COMMIT) .
+	docker build -t $(REPOSITORY):$(COMMIT) .
 ifneq ($(RELEASE),)
 	docker tag $(REPOSITORY):$(COMMIT) $(REPOSITORY):$(RELEASE)
 endif
