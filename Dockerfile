@@ -1,6 +1,6 @@
 FROM centos:7
 
-MAINTAINER mitch.hulscher@nepworldwide.nl
+MAINTAINER mitch.hulscher@lib.io
 
 # Install required Software
 
