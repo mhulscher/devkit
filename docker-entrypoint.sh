@@ -42,6 +42,9 @@ function start_mariadb {
 function start_redis {
   sudo -u redis /usr/bin/redis-server &
   sleep 1
+  redis-cli config set protected-mode no
+  redis-cli config set appendonly no
+  redis-cli config set save ""
 }
 
 function start_php_fpm {
