@@ -5,13 +5,13 @@ COMMIT=git-$(shell git rev-parse --short HEAD)
 ifndef $(APP)
 APP=devkit
 endif
-REGISTRY=quay.io/mhulscher
+REGISTRY=eu.gcr.io/sysops-1372
 REPOSITORY=$(REGISTRY)/$(APP)
 
 all: docker-image
 clean: docker-rmi
 
-ci-build: docker-image docker-push write-version clean
+ci-build: docker-image docker-push write-version docker-rmi
 ci-deploy: deis-deploy
 
 create-artifact:
@@ -30,9 +30,9 @@ endif
 
 write-version:
 ifneq ($(RELEASE),)
-	echo release=$(RELEASE) > version.txt
+	echo release=$(RELEASE) > ci-vars.txt
 else
-	echo release=$(COMMIT)  > version.txt
+	echo release=$(COMMIT)  > ci-vars.txt
 endif
 
 
