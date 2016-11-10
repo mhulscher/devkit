@@ -12,18 +12,19 @@ all: docker-image
 clean: docker-rmi
 
 ci-build: docker-image docker-push write-version docker-rmi
-ci-deploy: deis-deploy
 
 create-artifact:
 
 docker-image:
 	docker build -t $(REPOSITORY):$(COMMIT) .
+	docker tag $(REPOSITORY):$(COMMIT) $(REPOSITORY):latest
 ifneq ($(RELEASE),)
 	docker tag $(REPOSITORY):$(COMMIT) $(REPOSITORY):$(RELEASE)
 endif
 
 docker-push:
 	docker push $(REPOSITORY):$(COMMIT)
+	docker push $(REPOSITORY):latest
 ifneq ($(RELEASE),)
 	docker push $(REPOSITORY):$(RELEASE)
 endif
@@ -35,16 +36,9 @@ else
 	echo release=$(COMMIT)  > ci-vars.txt
 endif
 
-
 docker-rmi:
 	docker rmi $(REPOSITORY):$(COMMIT)
+	docker rmi $(REPOSITORY):latest
 ifneq ($(RELEASE),)
 	docker rmi $(REPOSITORY):$(RELEASE)
-endif
-
-deis-deploy:
-ifneq ($(RELEASE),)
-	deis pull $(REPOSITORY):$(RELEASE) -a $(APP)
-else
-	deis pull $(REPOSITORY):$(COMMIT) -a $(APP)
 endif
