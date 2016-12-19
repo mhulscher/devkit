@@ -87,31 +87,31 @@ type=rpm-md\n\
 ## php
 
  && yum -y install \
-    php70u-bcmath \
-    php70u-cli \
-    php70u-common \
-    php70u-fpm \
-    php70u-gd \
-    php70u-imap \
-    php70u-intl \
-    php70u-json \
-    php70u-ldap \
-    php70u-mbstring \
-    php70u-mcrypt \
-    php70u-mysqlnd \
-    php70u-odbc \
-    php70u-pecl-amqp \
-    php70u-pecl-apcu \
-    php70u-pecl-redis \
-    php70u-pecl-xdebug \
-    php70u-pdo \
-    php70u-process \
-    php70u-recode \
-    php70u-soap \
-    php70u-tidy \
-    php70u-twig \
-    php70u-xml \
-    php70u-xmlrpc \
+    php71u-bcmath \
+    php71u-cli \
+    php71u-common \
+    php71u-fpm \
+    php71u-gd \
+    php71u-imap \
+    php71u-intl \
+    php71u-json \
+    php71u-ldap \
+    php71u-mbstring \
+    php71u-mcrypt \
+    php71u-mysqlnd \
+    php71u-odbc \
+    php71u-pecl-amqp \
+    php71u-pecl-apcu \
+    php71u-pecl-redis \
+    php71u-pecl-xdebug \
+    php71u-pdo \
+    php71u-process \
+    php71u-recode \
+    php71u-soap \
+    php71u-tidy \
+    php71u-twig \
+    php71u-xml \
+    php71u-xmlrpc \
   && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin \
   && mv /usr/bin/composer.phar /usr/bin/composer \
   && chmod +x /usr/bin/composer \
