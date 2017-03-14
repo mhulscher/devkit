@@ -1,6 +1,6 @@
 [template]
-src   = "www.conf.tmpl"
-dest  = "/etc/nginx/conf.d/www.conf"
+src   = "nginx.conf.tmpl"
+dest  = "/etc/nginx/nginx.conf"
 owner = "nginx"
 mode  = "0444"
 keys  = [

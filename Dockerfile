@@ -169,8 +169,6 @@ type=rpm-md\n\
 # install configuration files
 
 COPY confd                       /etc/confd
-COPY nginx/nginx.conf            /etc/nginx/nginx.conf
-COPY nginx/001-logformat.conf    /etc/nginx/conf.d/001-logformat.conf
 COPY php/php.ini                 /etc/php.ini
 COPY php/php-fpm.conf            /etc/php-fpm.conf
 COPY php/www.conf                /etc/php-fpm.d/www.conf

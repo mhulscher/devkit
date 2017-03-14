@@ -53,10 +53,22 @@ function start_php_fpm {
 }
 
 function start_nginx {
-  # Set configuration
+
+  # Configuration of nginx
   export NGX_DOCUMENT_ROOT="${NGX_DOCUMENT_ROOT:-/var/www/html/web}"
   export NGX_PHP_FRONT_CONTROLLER="${NGX_PHP_FRONT_CONTROLLER:-app.php}"
   export NGX_PHP_LOCATION="${NGX_PHP_LOCATION:-^/${NGX_PHP_FRONT_CONTROLLER}(/|$)}"
+  
+  export NGX_CLIENT_MAX_BODY_SIZE=${NGX_CLIENT_MAX_BODY_SIZE:-128k}
+  export NGX_CLIENT_BODY_BUFFER_SIZE=${NGX_CLIENT_BODY_BUFFER_SIZE:-128k}
+  export NGX_CLIENT_BODY_TIMEOUT=${NGX_CLIENT_BODY_TIMEOUT:-5s}
+  export NGX_CLIENT_HEADER_TIMEOUT=${NGX_CLIENT_HEADER_TIMEOUT:-5s}
+  
+  export NGX_FASTCGI_BUFFERS=${NGX_FASTCGI_BUFFERS:-256 16k}
+  export NGX_FASTCGI_BUFFER_SIZE=${NGX_FASTCGI_BUFFER_SIZE:-128k}
+  export NGX_FASTCGI_CONNECT_TIMEOUT=${NGX_FASTCGI_CONNECT_TIMEOUT:-3s}
+  export NGX_FASTCGI_SEND_TIMEOUT=${NGX_FASTCGI_SEND_TIMEOUT:-5s}
+  export NGX_FASTCGI_READ_TIMEOUT=${NGX_FASTCGI_READ_TIMEOUT:-5s}
 
   confd -onetime -backend env --log-level info
   /usr/sbin/nginx -g "daemon off;" -c /etc/nginx/nginx.conf &
